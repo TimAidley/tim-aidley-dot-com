@@ -1,7 +1,7 @@
 ---
-title: My Timber Site
-description: A site built with Timber.
-baseUrl: https://example.com
+title: Tim Aidley dot com
+description: Tim's home page.
+baseUrl: https://timaidley.github.io/tim-aidley-dot-com
 homepage: PAGE-HOME
 activeTheme: default
 ---
