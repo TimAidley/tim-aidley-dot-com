@@ -1,0 +1,128 @@
+# Build & deploy a Timber site to GitLab Pages.
+#
+# Copy this file into your CONTENT project at .gitlab-ci.yml. It builds your site with the
+# Timber generator and publishes it via GitLab Pages (the `pages` job's `public/` artifact),
+# served at your project's Pages URL, e.g. https://<namespace>.gitlab.io/<project>/. Like
+# GitHub (and unlike Codeberg's branch-based Pages), GitLab Pages is CI-artifact-based, so
+# `main` holds source only. This file coexists with the GitHub/Codeberg workflows — GitLab
+# ignores .github/ and .forgejo/, and they ignore .gitlab-ci.yml.
+#
+# One-time setup:
+#   1. Set your site's baseUrl (content/settings) to your Pages URL so links resolve under
+#      the /<project>/ subpath.
+#   2. Pin TIMBER_REF below to a Timber release tag so preview ≡ production.
+#   3. Editor sign-in: paste-a-PAT works with no setup. For "Sign in with GitLab", the
+#      `setup-oauth-broker` job below deploys the broker for you (run it once from the
+#      Pipelines page) — see its comment for the one-time variables it needs.
+
+stages:
+  - setup
+  - deploy
+
+variables:
+  TIMBER_REPO: 'TimAidley/Timber'
+  TIMBER_REF: 'main' # pin to a Timber release tag
+
+# One-time OAuth broker setup for "Sign in with GitLab" — run manually from the Pipelines
+# page (the ▶ on this job). It deploys Timber's broker to Cloudflare in GitLab mode (public
+# client, NO secret — GitLab is a public client; the broker is only a CORS relay), records
+# the worker URL to .timber-broker-url, and pushes it (triggering a redeploy with sign-in
+# active). One-time CI/CD variables (Settings → CI/CD → Variables), all "masked":
+#   TIMBER_OAUTH_CLIENT_ID   your public OAuth application's Application ID
+#   CLOUDFLARE_API_TOKEN     Workers Scripts: Edit
+#   CLOUDFLARE_ACCOUNT_ID
+#   GITLAB_PUSH_TOKEN        a project/personal access token with write_repository (to push
+#                            .timber-broker-url back and trigger the redeploy)
+# Optional: OAUTH_CLIENT_SECRET (only for a *confidential* app), TIMBER_EDITOR_ORIGIN
+# (override the editor origin if CI_PAGES_URL isn't your final origin).
+setup-oauth-broker:
+  stage: setup
+  image: node:22-bookworm
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: manual
+      allow_failure: true
+  script:
+    - apt-get update -qq && apt-get install -y -qq jq
+    - git clone --depth 1 --branch "$TIMBER_REF" "https://github.com/$TIMBER_REPO" .timber
+    - |
+      set -euo pipefail
+      ORIGIN="${TIMBER_EDITOR_ORIGIN:-$(printf '%s' "${CI_PAGES_URL:-}" | sed -E 's#^(https?://[^/]+).*#\1#')}"
+      if [ -z "$ORIGIN" ]; then
+        echo "Could not determine the editor origin. Set a TIMBER_EDITOR_ORIGIN CI/CD variable (e.g. https://<namespace>.gitlab.io) and re-run." >&2
+        exit 1
+      fi
+      # Deploy the broker (Gitea/GitLab mode uses no secret). CLOUDFLARE_* are read from env.
+      ( cd .timber/packages/oauth-broker
+        if [ -n "${OAUTH_CLIENT_SECRET:-}" ]; then
+          printf '%s' "$OAUTH_CLIENT_SECRET" | npx --yes wrangler@3 secret put OAUTH_CLIENT_SECRET
+        fi
+        npx --yes wrangler@3 deploy \
+          --var GITLAB_BASE_URL:"$CI_SERVER_URL" \
+          --var OAUTH_CLIENT_ID:"$TIMBER_OAUTH_CLIENT_ID" \
+          --var ALLOWED_ORIGINS:"$ORIGIN" )
+      # Look up the worker URL and commit it; the push triggers a redeploy with OAuth active.
+      SUBDOMAIN="$(curl -fsS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+        "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain" | jq -r '.result.subdomain')"
+      if [ -z "$SUBDOMAIN" ] || [ "$SUBDOMAIN" = "null" ]; then
+        echo "Could not read your workers.dev subdomain. Enable workers.dev for your account, then re-run." >&2
+        exit 1
+      fi
+      URL="https://timber-oauth-broker.$SUBDOMAIN.workers.dev"
+      echo "Broker URL: $URL"
+      echo "$URL" > .timber-broker-url
+      git config user.name 'GitLab CI'
+      git config user.email "ci@${CI_SERVER_HOST}"
+      git add .timber-broker-url
+      if git diff --cached --quiet; then
+        echo "Broker URL unchanged — trigger a pipeline manually if the editor isn't yet OAuth-enabled."
+      else
+        git commit -m 'chore: record OAuth broker URL'
+        git push "https://oauth2:${GITLAB_PUSH_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "HEAD:${CI_DEFAULT_BRANCH}"
+      fi
+
+pages:
+  stage: deploy
+  image: node:22-bookworm
+  # Deploy on default-branch pushes, manual/API triggers (the editor's publish), and the
+  # scheduled rebuild — the same set the other hosts' workflows use.
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_PIPELINE_SOURCE == "api"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  script:
+    - npm install -g pnpm@10
+    # Timber lives on GitHub; clone it directly (pinned).
+    - git clone --depth 1 --branch "$TIMBER_REF" "https://github.com/$TIMBER_REPO" .timber
+    - (cd .timber && pnpm install --frozen-lockfile && pnpm --filter "@timber/cli..." build)
+    # GitLab Pages serves the `public/` directory.
+    - node .timber/packages/cli/dist/index.js build . public
+    # Co-host the editor at /<project>/edit/, configured for this GitLab project. The editor
+    # uses a relative base, so it works under the Pages subpath without a base var. Sign-in
+    # is paste-a-PAT unless the OAuth CI/CD variables (or a committed .timber-broker-url) are
+    # present, in which case it's "Sign in with GitLab".
+    - |
+      EDITOR_PATH="${TIMBER_EDITOR_PATH:-edit}"
+      EDITOR_PATH="${EDITOR_PATH#/}"; EDITOR_PATH="${EDITOR_PATH%/}"
+      export VITE_TIMBER_HOST='gitlab'
+      export VITE_TIMBER_API_BASE_URL="$CI_SERVER_URL"
+      export VITE_TIMBER_OWNER="$CI_PROJECT_NAMESPACE"
+      export VITE_TIMBER_REPO="$CI_PROJECT_NAME"
+      export VITE_TIMBER_PROJECT_PATH="$CI_PROJECT_PATH"
+      export VITE_TIMBER_UPSTREAM_REPO="$TIMBER_REPO"
+      export VITE_TIMBER_UPSTREAM_REF="$TIMBER_REF"
+      export VITE_TIMBER_BUILD_SHA="$(git -C .timber rev-parse HEAD)"
+      export VITE_TIMBER_OAUTH_CLIENT_ID="${TIMBER_OAUTH_CLIENT_ID:-}"
+      export VITE_TIMBER_OAUTH_SCOPE="${TIMBER_OAUTH_SCOPE:-}"
+      if [ -f .timber-broker-url ]; then
+        export VITE_TIMBER_OAUTH_BROKER_URL="$(cat .timber-broker-url)"
+      else
+        export VITE_TIMBER_OAUTH_BROKER_URL="${TIMBER_OAUTH_BROKER_URL:-}"
+      fi
+      ( cd .timber && pnpm --filter "@timber/app..." build )
+      mkdir -p "public/$EDITOR_PATH"
+      cp -r .timber/packages/app/dist/. "public/$EDITOR_PATH/"
+  artifacts:
+    paths:
+      - public

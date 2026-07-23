@@ -1,0 +1,159 @@
+name: Build & deploy site
+
+# Copy this file into your CONTENT repo at .github/workflows/deploy.yml.
+#
+# It builds your site with the Timber generator on every push to main (plus manual runs
+# and a daily rebuild) and deploys it. `main` holds source only — the built HTML never
+# enters git. See SPEC §12. It co-hosts the in-browser editor next to the site; the editor
+# always ships and its sign-in adapts to config (paste-a-PAT until you run "Setup OAuth
+# broker" for "Sign in with GitHub").
+#
+# TWO DEPLOY TARGETS (set the repo Variable TIMBER_DEPLOY_TARGET):
+#   * "github" (default) — GitHub Pages, served at https://<owner>.github.io/<repo>/, editor
+#     at /<repo>/edit/. One-time: Settings → Pages → Source: "GitHub Actions".
+#   * "cloudflare" — Cloudflare Pages (source stays on GitHub; GitHub Actions builds and
+#     publishes via wrangler). Served at your Pages project's root (<project>.pages.dev or a
+#     custom domain), editor at /edit/. One-time:
+#       - Secrets CLOUDFLARE_API_TOKEN (Cloudflare Pages: Edit) + CLOUDFLARE_ACCOUNT_ID.
+#       - Optional Variable TIMBER_CF_PAGES_PROJECT (the Pages project name; defaults to the
+#         repo name). The job creates the project on first run.
+#       - Set content/settings baseUrl to your Pages/custom-domain ROOT (no /<repo>/ path),
+#         so links + canonical URLs are correct at the root.
+#     Because GitHub Actions still runs the build, the editor's publish status works either way.
+#
+# Also: pin TIMBER_REF to a Timber release tag so preview ≡ production.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 4 * * *' # daily rebuild (SPEC §15)
+
+permissions:
+  contents: read
+  pages: write # (GitHub Pages target only; harmless otherwise)
+  id-token: write
+
+# One deploy at a time; let an in-flight deploy finish rather than cancel it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  TIMBER_REPO: TimAidley/Timber
+  TIMBER_REF: main # pin to a Timber release tag
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out this content repo
+        uses: actions/checkout@v4
+
+      - name: Check out Timber (pinned)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.TIMBER_REPO }}
+          ref: ${{ env.TIMBER_REF }}
+          path: .timber
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: .timber/pnpm-lock.yaml
+
+      - name: Install Timber deps
+        working-directory: .timber
+        run: pnpm install --frozen-lockfile
+
+      - name: Build the Timber CLI (generator)
+        working-directory: .timber
+        run: pnpm --filter "@timber/cli..." build
+
+      - name: Build the site
+        run: node .timber/packages/cli/dist/index.js build . _site
+
+      # Co-host the editor at the editor path — default "edit", overridable with the
+      # TIMBER_EDITOR_PATH repo variable. Its base depends on the deploy target: GitHub Pages
+      # serves under /<repo>/ (editor at /<repo>/edit/), Cloudflare Pages serves at the root
+      # (editor at /edit/). Sign-in adapts to config: with a broker URL (committed by "Setup
+      # OAuth broker") it shows "Sign in with GitHub"; otherwise paste-a-PAT. NOTE: if you
+      # change the path AND use the redirect flow, register the matching callback on your App.
+      - name: Build the editor
+        run: |
+          REPO='${{ github.event.repository.name }}'
+          DEPLOY_TARGET='${{ vars.TIMBER_DEPLOY_TARGET }}'
+          DEPLOY_TARGET="${DEPLOY_TARGET:-github}"
+          EDITOR_PATH='${{ vars.TIMBER_EDITOR_PATH }}'
+          EDITOR_PATH="${EDITOR_PATH:-edit}"                              # default
+          EDITOR_PATH="${EDITOR_PATH#/}"; EDITOR_PATH="${EDITOR_PATH%/}"  # strip any slashes
+          if [ "$DEPLOY_TARGET" = "cloudflare" ]; then
+            export TIMBER_BASE="/$EDITOR_PATH/"          # Cloudflare Pages serves at root
+          else
+            export TIMBER_BASE="/$REPO/$EDITOR_PATH/"    # GitHub project Pages subpath
+          fi
+          export VITE_TIMBER_OWNER='${{ github.repository_owner }}'
+          export VITE_TIMBER_REPO="$REPO"
+          # Build provenance: which Timber this editor was built from, so it can notice
+          # when the branch it follows has moved on and offer a redeploy (SPEC §12).
+          export VITE_TIMBER_UPSTREAM_REPO='${{ env.TIMBER_REPO }}'
+          export VITE_TIMBER_UPSTREAM_REF='${{ env.TIMBER_REF }}'
+          VITE_TIMBER_BUILD_SHA="$(git -C .timber rev-parse HEAD)"
+          export VITE_TIMBER_BUILD_SHA
+          export VITE_TIMBER_OAUTH_CLIENT_ID='${{ vars.GH_OAUTH_CLIENT_ID }}'
+          if [ -f .timber-broker-url ]; then
+            VITE_TIMBER_OAUTH_BROKER_URL="$(cat .timber-broker-url)"
+            export VITE_TIMBER_OAUTH_BROKER_URL
+          fi
+          export VITE_TIMBER_OAUTH_FLOW='${{ vars.TIMBER_OAUTH_FLOW }}'
+          ( cd .timber && pnpm --filter "@timber/app..." build )
+          mkdir -p "_site/$EDITOR_PATH"
+          cp -r .timber/packages/app/dist/. "_site/$EDITOR_PATH/"
+
+      # --- Publish: Cloudflare Pages (GitHub Actions builds, wrangler deploys) ---
+      - name: Deploy to Cloudflare Pages
+        if: ${{ vars.TIMBER_DEPLOY_TARGET == 'cloudflare' }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          PROJECT='${{ vars.TIMBER_CF_PAGES_PROJECT }}'
+          PROJECT="${PROJECT:-${{ github.event.repository.name }}}"
+          # Create the Pages project on first run (idempotent — ignore "already exists").
+          npx --yes wrangler@3 pages project create "$PROJECT" --production-branch=main 2>/dev/null || true
+          npx --yes wrangler@3 pages deploy _site \
+            --project-name="$PROJECT" --branch=main --commit-dirty=true
+
+      # --- Publish: GitHub Pages (default) ---
+      - name: Configure Pages
+        if: ${{ vars.TIMBER_DEPLOY_TARGET != 'cloudflare' }}
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload Pages artifact
+        if: ${{ vars.TIMBER_DEPLOY_TARGET != 'cloudflare' }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  # GitHub Pages needs a separate deploy job (its own environment). Skipped for Cloudflare,
+  # whose publish happens inline in the build job above.
+  deploy:
+    needs: build
+    if: ${{ vars.TIMBER_DEPLOY_TARGET != 'cloudflare' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

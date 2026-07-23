@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="{{ page.lang | default: 'en' }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ seo.title }}</title>
+    <meta name="description" content="{{ seo.description }}" />
+    <link rel="canonical" href="{{ seo.canonical }}" />
+    <meta property="og:title" content="{{ seo.ogTitle }}" />
+    <meta property="og:description" content="{{ seo.ogDescription }}" />
+    <meta property="og:type" content="{{ seo.ogType }}" />
+    {% if seo.ogImage %}<meta property="og:image" content="{{ seo.ogImage }}" />{% endif %}
+    {% comment %} hreflang alternates for translated pages (empty on single-language sites) {% endcomment %}
+    {% for alt in seo.alternates %}<link rel="alternate" hreflang="{{ alt.lang }}" href="{{ alt.href }}" />
+    {% endfor %}
+    <link rel="stylesheet" href="{{ site.basePath }}/assets/theme.css" />
+    {% comment %}themeStyle is generator-validated CSS (hex colours, fixed font/width maps),
+       so it's emitted raw — HTML-escaping would corrupt quoted font names inside <style>.{% endcomment %}
+    {% if site.themeStyle %}<style>{{ site.themeStyle | raw }}</style>{% endif %}
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="site-title" href="{{ site.basePath }}/">{{ site.title }}</a>
+      <nav class="site-nav">
+        {% for item in site.nav %}<a href="{{ site.basePath }}{{ item.url }}">{{ item.label }}</a>{% endfor %}
+      </nav>
+      {% comment %} Language switcher — only when the page has more than one translation {% endcomment %}
+      {% if page.translations.size > 1 %}
+      <nav class="site-langs" aria-label="Language">
+        {% for t in page.translations %}<a href="{{ site.basePath }}{{ t.url }}" lang="{{ t.lang }}"{% if t.lang == page.lang %} aria-current="true"{% endif %}>{{ t.lang }}</a>{% endfor %}
+      </nav>
+      {% endif %}
+    </header>
+    <main class="site-main">
+      {% comment %}
+        Per-type templates (templates/<type>.liquid) can `{% layout 'default' %}` and
+        override just this block, so the header/footer/<head> above live here only once.
+      {% endcomment %}
+      {% block main %}
+      <article class="page">
+        <h1>{{ page.title }}</h1>
+        {{ content }}
+      </article>
+      {% endblock %}
+    </main>
+    <footer class="site-footer">
+      <p>© {{ site.title }}{% if site.description %} — {{ site.description }}{% endif %}</p>
+    </footer>
+  </body>
+</html>
