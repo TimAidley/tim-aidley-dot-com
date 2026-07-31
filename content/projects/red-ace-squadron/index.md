@@ -5,7 +5,10 @@ start: 2001
 category: Games
 status: Released
 image: RedAceSquadron.jpg
-description: Red Ace Squadron was the sequel to Hunt for the Red Baron, and added more realistic environments and multiplayer. I improved the vehicle dynamics considerably, and added multiplayer support. However, I left the company before the project was completed.
+description: Red Ace Squadron was the sequel to Hunt for the Red Baron, and
+  added more realistic environments and multiplayer. I improved the vehicle
+  dynamics considerably, and added multiplayer support. However, I left the
+  company before the project was completed.
 tags:
   - PC
   - Flight Combat
@@ -13,3 +16,4 @@ tags:
   - C / COM
 public: true
 ---
+

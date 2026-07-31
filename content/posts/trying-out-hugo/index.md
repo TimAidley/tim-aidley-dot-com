@@ -1,8 +1,9 @@
 ---
 id: POST-TRYING-OUT-HUGO
 title: Resurrection of the blog
-date: '2025-01-20T11:57:23-08:00'
-description: It's been a long time since planettimmy.com was active, so I figured it was time to make an actual web presence again.
+date: 2025-01-20T11:57:23-08:00
+description: It's been a long time since planettimmy.com was active, so I
+  figured it was time to make an actual web presence again.
 public: true
 ---
 

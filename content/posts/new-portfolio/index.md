@@ -1,8 +1,9 @@
 ---
 id: POST-NEW-PORTFOLIO
 title: New Portfolio
-date: '2025-10-28T11:05:29-07:00'
-description: I have finally gotten around to starting a portfolio of the games and software I've worked on.
+date: 2025-10-28T11:05:29-07:00
+description: I have finally gotten around to starting a portfolio of the games
+  and software I've worked on.
 public: true
 ---
 

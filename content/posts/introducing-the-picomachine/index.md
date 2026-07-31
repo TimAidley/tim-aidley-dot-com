@@ -1,8 +1,9 @@
 ---
 id: POST-PICOMACHINE
 title: Introducing the Tim Aidley PicoMachine
-date: '2025-01-20T16:27:19-08:00'
-description: A portable computer designed specifically for developing Pico-8 and Picotron games on — the first post in a series about the device.
+date: 2025-01-20T16:27:19-08:00
+description: A portable computer designed specifically for developing Pico-8 and
+  Picotron games on — the first post in a series about the device.
 series: PicoMachine
 keywords:
   - picomachine

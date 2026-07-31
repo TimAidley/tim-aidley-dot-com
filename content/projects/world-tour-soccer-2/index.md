@@ -6,7 +6,8 @@ category: Games
 company: Sony Computer Entertainment Europe
 status: Released
 image: WorldTourSoccer2.jpg
-description: Integrated Lua as a scripting engine, and led the Game Modes team of three engineers, as well as authoring some of the game modes myself.
+description: Integrated Lua as a scripting engine, and led the Game Modes team
+  of three engineers, as well as authoring some of the game modes myself.
 tags:
   - PSP
   - Sports
@@ -14,3 +15,4 @@ tags:
   - Lua
 public: true
 ---
+
