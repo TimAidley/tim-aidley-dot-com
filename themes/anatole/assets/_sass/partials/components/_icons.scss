@@ -1,0 +1,34 @@
+// The stock theme pulled in the whole FontAwesome webfont (four CSS files plus ~1MB of
+// woff2/ttf) to draw five social links and a handful of meta glyphs. Those icons are
+// inlined as SVG in `templates/icons.liquid` instead, so the site ships no icon font at
+// all. These rules give the inline SVGs the sizing the font classes used to provide.
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  vertical-align: -0.125em;
+}
+
+// Sidebar social links — the FontAwesome `fa-2x` equivalent.
+.sidebar__list-item {
+  .icon {
+    width: 2em;
+    height: 2em;
+  }
+
+  a {
+    display: inline-block;
+    padding: 4px;
+
+    @include themed() {
+      color: t('primary');
+    }
+
+    &:hover {
+      @include themed() {
+        color: t('info');
+      }
+    }
+  }
+}

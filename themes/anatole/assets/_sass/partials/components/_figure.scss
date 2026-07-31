@@ -1,0 +1,83 @@
+// Timber's `:::figure` directive emits `<figure class="fig fig--<layout> fig--<size>">`
+// (see the generator's figureDirective). The stock anatole theme instead styled Hugo's
+// `{{< figure class="right|small" >}}` output. This maps Timber's vocabulary onto the
+// same visual result, so the ported posts float and size exactly as they did before.
+//
+// Nested under `.post__content` deliberately: anatole's own `.post__content figure`
+// rule sets `max-width: 100%`, and a bare `.fig--wrap-right` would lose to it on
+// specificity. Matching the scope puts these rules on equal footing, where source
+// order (this file is imported after `post`) decides.
+.post__content {
+  .fig {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    text-align: center;
+
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 100%;
+    }
+
+    figcaption {
+      font-size: 1.4rem;
+      margin-top: 0.5em;
+
+      @include themed() {
+        color: t('primary-light');
+      }
+    }
+
+    // Sizes — anatole's .small / .medium / .big.
+    &--sm {
+      max-width: 50%;
+    }
+
+    &--md {
+      max-width: 75%;
+    }
+
+    &--lg {
+      max-width: 87.5%;
+    }
+
+    &--full-width {
+      max-width: 100%;
+    }
+
+    // Wrapped layouts only float once there is room for text beside them.
+    &--wrap-right {
+      @include desktop {
+        max-width: 50%;
+
+        @include ltr {
+          float: right;
+          margin: 0 0 0 1.5em;
+        }
+
+        @include rtl {
+          float: left;
+          margin: 0 1.5em 0 0;
+        }
+      }
+    }
+
+    &--wrap-left {
+      @include desktop {
+        max-width: 50%;
+
+        @include ltr {
+          float: left;
+          margin-right: 1.5em;
+        }
+
+        @include rtl {
+          float: right;
+          margin-left: 1.5em;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{% layout 'default' %}
+{%- comment -%}
+  A single blog post — anatole's `_default/single.html`.
+
+  Dropped from the original: reading time (Timber exposes no word count to templates),
+  the table of contents, series/related-post navigation, and the five comment providers,
+  none of which were enabled on this site.
+{%- endcomment -%}
+{% block main %}
+  <div class="post animated fadeInDown">
+    {% if page.thumbnail %}
+      <div class="post__thumbnail-wrapper">
+        <img class="post__thumbnail" src="{{ page.thumbnail }}" alt="{{ page.title }}" />
+      </div>
+    {% endif %}
+    <div class="post__content">
+      <h1>{{ page.title }}</h1>
+      <ul class="post__meta">
+        <li class="post__meta-item">
+          {%- render 'icons', name: 'calendar' -%}
+          {%- comment -%}
+            Take the calendar date off the front of the timestamp and format it at UTC.
+            Formatting the full instant would re-zone it (a 16:27 -08:00 post renders as
+            the next day in UTC), and leaving the offset unpinned would make the output
+            depend on the timezone of whichever machine ran the build.
+          {%- endcomment -%}
+          <span class="post__meta-text">{{ page.date | slice: 0, 10 | date: '%a, %b %-d, %Y', 0 }}</span>
+        </li>
+        {% if page.series %}
+          <li class="post__meta-item">
+            {%- render 'icons', name: 'flag' -%}
+            <span class="post__meta-text">{{ page.series }}</span>
+          </li>
+        {% endif %}
+      </ul>
+      {{ content }}
+    </div>
+  </div>
+{% endblock %}

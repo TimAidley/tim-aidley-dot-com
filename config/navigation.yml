@@ -1,4 +1,8 @@
+# Mirrors Hugo's [menu.main]. The About entry was commented out in hugo.toml and the
+# page is still a draft, so it stays out of the nav here too.
 - label: Home
   ref: PAGE-HOME
-- label: About
-  ref: PAGE-ABOUT
+- label: Posts
+  ref: PAGE-POSTS
+- label: Portfolio
+  ref: PAGE-PORTFOLIO

@@ -1,8 +1,25 @@
+# Standalone pages. `urlPattern` drops the type segment so these sit at the site root
+# (`/about/`, `/portfolio/`, `/posts/`) exactly as they did under Hugo.
+#
+# Hugo used a different Go template per section (index.html, list.html,
+# portfolio/list.html). Timber picks a template by *type*, not per object, so the
+# `layout` field below selects which body `pages.liquid` renders. That keeps the choice
+# visible and editable in the CMS instead of hidden in the theme.
 kind: collection
+urlPattern: /{slug}/
 hasBody: true
 fields:
   title:
     type: text
     required: true
+  layout:
+    type: enum
+    required: true
+    label: Layout
+    options:
+      - plain # body only
+      - home # body, then the recent-posts listing
+      - archive # body, then every post grouped by year
+      - portfolio # body, then the projects listing with sort controls
   description:
-    type: text
+    type: multiline

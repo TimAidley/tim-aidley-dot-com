@@ -1,0 +1,28 @@
+@import './modules/variables';
+@import './modules/config';
+@import './modules/color_theme';
+@import './partials/typography';
+@import './partials/base';
+@import './partials/layout/html';
+@import './partials/layout/body';
+@import './partials/layout/header';
+@import './partials/layout/nav';
+@import './partials/components/animated';
+@import './partials/components/tag';
+@import './partials/components/wrapper';
+@import './partials/components/sidebar';
+@import './partials/components/footer';
+@import './partials/components/navbarburger';
+@import './partials/components/themeswitch';
+@import './partials/components/post';
+@import './partials/components/archive';
+@import './partials/components/portfolio';
+@import './partials/vendors/table';
+// Timber-specific additions on top of the stock anatole partials.
+@import './partials/components/figure';
+@import './partials/components/portfolio-custom';
+@import './partials/components/icons';
+
+// Dropped from the stock theme because nothing on this site uses them: category,
+// pagination, comment, optionswitch, alert, page404, notice, mediumzoom,
+// contactform, tableofcontents.

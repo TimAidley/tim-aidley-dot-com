@@ -1,0 +1,50 @@
+# Portfolio entries. In Hugo these were 29 records inside `data/portfolio.yml`, which
+# meant they could not be edited through a CMS. Here each one is a first-class content
+# object with its own bundle (and its own colocated image), so they are editable in the
+# browser; `portfolio.liquid` groups them back into the three categories for display.
+kind: collection
+urlPattern: /projects/{slug}/
+hasBody: false
+fields:
+  title:
+    type: text
+    required: true
+    label: Name
+  # `start` is the year the work began. Declared before any date field so the schema's
+  # sort key stays deterministic; the portfolio template sorts on it explicitly.
+  start:
+    type: number
+    required: true
+    label: Year
+    min: 1990
+    max: 2100
+  category:
+    type: enum
+    required: true
+    label: Category
+    options:
+      - Games
+      - Other Software
+      - Film & Television
+  company:
+    type: text
+    label: Company
+  status:
+    type: text
+    label: Status
+  image:
+    type: image
+    label: Image
+  description:
+    type: multiline
+    required: true
+    label: Description
+  tags:
+    type: tags
+    label: Tags
+  link:
+    type: text
+    label: Link URL
+  linktext:
+    type: text
+    label: Link text

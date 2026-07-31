@@ -1,3 +1,10 @@
+# Site-wide settings — the Timber equivalent of Hugo's `[params]` block in hugo.toml.
+# `page: false` marks this as the config singleton: it is read into `{{ site }}` but
+# never rendered as a page of its own.
+#
+# The default theme's colour/font knobs (accentColor, bodyFont, contentWidth, …) are
+# deliberately absent: the anatole theme ships its own light/dark palette and type
+# scale, so those settings would have had no effect.
 kind: singleton
 page: false
 hasBody: false
@@ -5,48 +12,46 @@ fields:
   title:
     type: text
   description:
+    type: multiline
+    label: Sidebar bio
+  author:
     type: text
   baseUrl:
     type: text
   homepage:
     type: reference
     referenceType: pages
-  # Active theme (SPEC §13): the name of the folder under `themes/` to render the site
-  # with. Each theme is self-contained (`themes/<name>/templates` + `themes/<name>/assets`),
-  # so switching is just changing this value and deleting one is removing its folder. Leave
-  # unset to fall back to the legacy root `templates/` + `assets/`.
   activeTheme:
     type: text
     label: Active theme
-  # Theme options (SPEC §13): override the default theme's CSS variables. Each is
-  # optional — leave it unset to keep the theme default.
-  accentColor:
-    type: color
-    label: Accent colour
-  textColor:
-    type: color
-    label: Text colour
-  backgroundColor:
-    type: color
-    label: Background colour
-  bodyFont:
-    type: enum
-    label: Body font
-    options: [serif, sans, mono]
-  headingFont:
-    type: enum
-    label: Heading font
-    options: [serif, sans, mono]
-  contentWidth:
-    type: enum
-    label: Content width
-    options: [narrow, normal, wide]
-  # Multiple languages (optional). Leave `languages` empty for a single-language site.
-  # Listing 2+ codes turns on i18n: per-language URLs (/<lang>/…), an "Add translation"
-  # action, and a theme language switcher. See docs/multilingual.md.
-  languages:
-    type: tags
-    label: Languages (BCP-47 codes, e.g. en, fr)
-  defaultLanguage:
+  profilePicture:
+    type: image
+    label: Profile picture
+  copyright:
+    type: multiline
+    label: Copyright line
+    # Hugo embedded a `{{ YEAR }}` placeholder here; the footer template now prepends the
+    # build year itself, so this holds just the text that follows it.
+  contentRatio:
+    type: number
+    label: Content column ratio
+    min: 0.5
+    max: 0.9
+  # Social links. Hugo stored these as a repeating `[[params.socialIcons]]` array, but
+  # Timber's v1 field vocabulary has no list-of-objects kind, so each link is its own
+  # field. The sidebar renders only the ones that are filled in.
+  bluesky:
     type: text
-    label: Default language
+    label: Bluesky URL
+  mastodon:
+    type: text
+    label: Mastodon URL
+  github:
+    type: text
+    label: GitHub URL
+  linkedin:
+    type: text
+    label: LinkedIn URL
+  email:
+    type: text
+    label: Email address

@@ -1,0 +1,49 @@
+{% layout 'default' %}
+{%- comment -%}
+  A single portfolio entry. The Hugo site had no per-project page — every item lived
+  inside data/portfolio.yml and only ever appeared in the list. Making projects real
+  content objects gives each one its own URL, which the portfolio listing links to.
+{%- endcomment -%}
+{% block main %}
+  <div class="post animated fadeInDown">
+    <div class="post__content">
+      <h1>{{ page.title }}</h1>
+      <ul class="portfolio__meta">
+        {% if page.company %}
+          <li class="portfolio__meta-item">
+            {%- render 'icons', name: 'building' -%}<span>{{ page.company }}</span>
+          </li>
+        {% endif %}
+        {% if page.status %}
+          <li class="portfolio__meta-item">
+            {%- render 'icons', name: 'flag' -%}<span>{{ page.status }}</span>
+          </li>
+        {% endif %}
+        {% if page.start %}
+          <li class="portfolio__meta-item">
+            {%- render 'icons', name: 'calendar' -%}<span>{{ page.start }}</span>
+          </li>
+        {% endif %}
+      </ul>
+      {% if page.image %}
+        <div class="portfolio-item__image">
+          <img src="{{ page.image }}" alt="{{ page.title }}" loading="lazy" />
+        </div>
+      {% endif %}
+      <p>{{ page.description }}</p>
+      {% if page.link %}
+        <div class="portfolio__button-wrapper">
+          <a class="portfolio__button" href="{{ page.link }}" target="_blank" rel="noopener">
+            {{ page.linktext | default: 'Visit Site' }}
+          </a>
+        </div>
+      {% endif %}
+      {% if page.tags %}
+        <div class="separator">
+          {% for tag in page.tags %}<p class="tag">{{ tag }}</p>{% endfor %}
+        </div>
+      {% endif %}
+      <p><a href="{{ '/portfolio/' | relative_url }}">&larr; Back to the portfolio</a></p>
+    </div>
+  </div>
+{% endblock %}

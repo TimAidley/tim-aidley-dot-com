@@ -1,0 +1,29 @@
+# Blog posts. Slugs are preserved from the Hugo site, and `urlPattern` keeps the
+# original `/posts/<slug>/` URLs so existing links and search results still resolve.
+kind: collection
+urlPattern: /posts/{slug}/
+hasBody: true
+fields:
+  title:
+    type: text
+    required: true
+  # First date/datetime field in declaration order — this is what Timber sorts the
+  # collection by (most-recent-first), so it must stay above the other fields.
+  date:
+    type: datetime
+    required: true
+    label: Published
+  description:
+    type: multiline
+    label: Summary
+    # Shown on the home page listing and used as the meta/OG description. Hugo derived
+    # this from the `<!--more-->` divider; in Timber it is an explicit field.
+  thumbnail:
+    type: image
+    label: Thumbnail
+  series:
+    type: text
+    label: Series
+  keywords:
+    type: tags
+    label: Keywords

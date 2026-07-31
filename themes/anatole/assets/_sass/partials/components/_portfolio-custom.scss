@@ -1,0 +1,154 @@
+// Ported from the Hugo site's `assets/css/custom-portfolio.css`. The original was plain
+// CSS that reached for a `var(--theme-color)` custom property; anatole drives colour
+// through the `themed()` mixin instead, so those references become theme lookups and the
+// portfolio now follows the light/dark switch like the rest of the site.
+
+.portfolio-sort-controls {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: rgba(128, 128, 128, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  label {
+    font-weight: 600;
+
+    @include themed() {
+      color: t('primary');
+    }
+  }
+}
+
+.portfolio-sort-select {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  @include themed() {
+    border: 2px solid t('primary-lighter');
+    background-color: t('accent');
+    color: t('primary');
+  }
+
+  &:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus {
+    outline: none;
+
+    @include themed() {
+      border-color: t('info');
+    }
+  }
+}
+
+.portfolio-item {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+
+  @include themed() {
+    border-bottom: t('border');
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  // Image on the left, text on the right; stacks on narrow screens.
+  &__main {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__image {
+    flex: 0 0 150px;
+    min-width: 150px;
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    // Lets the flex item shrink below its content size.
+    min-width: 0;
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 2.4rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+  }
+}
+
+.portfolio__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0;
+  list-style: none;
+
+  &-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+
+    .icon {
+      @include themed() {
+        color: t('primary-light');
+      }
+    }
+  }
+}
+
+.portfolio__button-wrapper {
+  margin-top: 1rem;
+}
+
+.portfolio__button {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: opacity 0.3s ease;
+
+  @include themed() {
+    background-color: t('primary');
+    color: t('accent');
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-item__main {
+    flex-direction: column;
+  }
+
+  .portfolio-item__image {
+    flex: 0 0 auto;
+    min-width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,13 @@
+---
+# The `---` fence marks this as a *main* stylesheet: Timber compiles it to
+# /assets/anatole.css. Files under _sass/ carry no fence, so they are treated as
+# partials — pulled in by @import below and never emitted on their own.
+#
+# Hugo injected $content-ratio via `resources.ExecuteAsTemplate`; Timber runs the entry
+# stylesheet through Liquid with the site context, so the same knob comes from the
+# settings singleton instead.
+---
+$content-ratio: {{ site.contentRatio | default: 0.75 }};
+$text-direction: 'ltr';
+
+@import 'main.scss';
