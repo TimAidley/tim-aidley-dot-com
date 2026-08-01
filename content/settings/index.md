@@ -14,5 +14,6 @@ mastodon: https://mastodon.gamedev.place/@planettimmy
 github: https://github.com/TimAidley
 linkedin: https://www.linkedin.com/in/timaidley/
 email: tim@aidley.com
+profilePictureAlt: A black-and-white picture of a *very* handsome man, who is grinning.
 ---
 
