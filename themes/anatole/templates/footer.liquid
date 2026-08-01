@@ -18,7 +18,7 @@
         Escape before turning newlines into breaks, so a multi-line copyright keeps its
         shape without letting raw markup through.
       {%- endcomment -%}
-      &copy; {{ year }} {{ copyright | default: author | escape | newline_to_br | raw }}
+      &copy; {{ year }} {{ copyright | default: author | markdownify }}
     </li>
   </ul>
 </footer>
