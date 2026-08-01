@@ -27,6 +27,12 @@ fields:
   profilePicture:
     type: image
     label: Profile picture
+  profilePictureAlt:
+    type: text
+    label: Profile picture alt text
+    # Describes the photo for screen readers and for anyone whose images don't load.
+    # anatole hardcoded "profile picture", which tells a listener nothing; the template
+    # falls back to the author's name when this is empty.
   copyright:
     type: multiline
     label: Copyright line
