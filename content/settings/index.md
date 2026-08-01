@@ -1,7 +1,7 @@
 ---
 title: Tim Aidley
 author: Tim Aidley
-baseUrl: https://timaidley.github.io/tim-aidley-dot-com/
+baseUrl: https://tim.aidley.com/
 homepage: PAGE-HOME
 activeTheme: anatole
 profilePicture: /assets/general/tim.jpg
