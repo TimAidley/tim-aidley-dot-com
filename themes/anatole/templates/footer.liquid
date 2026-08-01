@@ -1,0 +1,24 @@
+{%- comment -%}
+  anatole's `partials/footer.html`, which the theme renders **twice** with different
+  class modifiers — the CSS then shows exactly one of them:
+
+    footer__sidebar → inside the sidebar column; hidden below the desktop breakpoint
+    footer__base    → after the wrapper; `display: none` on desktop (mobile only)
+
+  Emitting only one leaves the footer invisible at that breakpoint, which is what
+  happened here: the site had no copyright line on desktop at all.
+
+  `{% render %}` is scope-isolated in LiquidJS, so everything this needs is passed in
+  rather than read off `site`.
+{%- endcomment -%}
+<footer class="footer footer__{{ modifier }}">
+  <ul class="footer__list">
+    <li class="footer__item">
+      {%- comment -%}
+        Escape before turning newlines into breaks, so a multi-line copyright keeps its
+        shape without letting raw markup through.
+      {%- endcomment -%}
+      &copy; {{ year }} {{ copyright | default: author | escape | newline_to_br | raw }}
+    </li>
+  </ul>
+</footer>

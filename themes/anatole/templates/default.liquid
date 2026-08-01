@@ -27,6 +27,7 @@
     <script src="{{ '/assets/js/nav.js' | relative_url }}"></script>
   </head>
   <body class="body">
+    {%- assign footerYear = today | slice: 0, 4 -%}
     <div class="wrapper">
       <aside class="wrapper__sidebar">
         <div class="sidebar animated fadeInDown">
@@ -73,6 +74,7 @@
               {%- endif -%}
             </ul>
           </div>
+          {%- render 'footer', modifier: 'sidebar', year: footerYear, copyright: site.copyright, author: site.author -%}
         </div>
       </aside>
       <main class="wrapper__main">
@@ -111,13 +113,6 @@
         {% endblock %}
       </main>
     </div>
-    <footer class="footer footer__base">
-      <ul class="footer__list">
-        <li class="footer__item">
-          &copy; {{ today | slice: 0, 4 }}
-          {{ site.copyright | default: site.author | escape | newline_to_br | raw }}
-        </li>
-      </ul>
-    </footer>
+    {%- render 'footer', modifier: 'base', year: footerYear, copyright: site.copyright, author: site.author -%}
   </body>
 </html>
