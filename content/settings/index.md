@@ -1,7 +1,6 @@
 ---
 title: Tim Aidley
 author: Tim Aidley
-description: Engineer and manager — 29 years in games, XR, and VFX.
 baseUrl: https://timaidley.github.io/tim-aidley-dot-com/
 homepage: PAGE-HOME
 activeTheme: anatole
