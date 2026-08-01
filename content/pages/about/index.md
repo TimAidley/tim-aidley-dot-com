@@ -2,7 +2,6 @@
 id: PAGE-ABOUT
 title: Timothy John Aidley
 layout: plain
-description: Engineer and manager — games, XR, and VFX.
 ---
 
 ## ENGINEER / MANAGER  GAMES &#x2022; XR &#x2022; VFX
