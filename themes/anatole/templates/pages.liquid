@@ -38,8 +38,15 @@
         {% endif %}
         <div class="post__content">
           <h3><a href="{{ post.url | relative_url }}">{{ post.title | upcase }}</a></h3>
-          <p>{{ post.description }}</p>
-          <a href="{{ post.url | relative_url }}">Read more</a>
+          {%- comment -%}
+            anatole's index.html shows `.Summary` — the opening of the post itself, not
+            the meta description — and offers "Read more" only when the post is actually
+            `.Truncated`. `post.excerpt`/`post.truncated` are the generator's equivalents:
+            the body up to `<!--more-->`, else its first paragraph. `description` remains
+            the fallback for a post with no body to excerpt.
+          {%- endcomment -%}
+          {% if post.excerpt %}{{ post.excerpt }}{% else %}<p>{{ post.description }}</p>{% endif %}
+          {% if post.truncated %}<a href="{{ post.url | relative_url }}">Read more</a>{% endif %}
         </div>
         <div class="post__footer">
           {%- render 'icons', name: 'calendar' -%}

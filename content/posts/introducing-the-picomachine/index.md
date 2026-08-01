@@ -23,6 +23,8 @@ I'd like to introduce a little project I started at the end of November, 2024. I
 
 This post will be the first in a series about the device.
 
+<!--more-->
+
 # Conception
 Ever since I started playing with Pico-8, I've had an idea that I might like to build a piece of hardware especially designed for using it. It was always something I never quite got around to. Anyway, I was playing around with Picotron, and I started thinking about it again. I realized I had several of the prerequisites already:
 * A decent 3D printer
