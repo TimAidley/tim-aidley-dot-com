@@ -11,7 +11,6 @@ $themes: (
     success: $success,
     warning: $warning,
     danger: $danger,
-    color-scheme: light,
   ),
   dark: (
     accent: $accent--darkmode,
@@ -25,7 +24,6 @@ $themes: (
     success: $success,
     warning: $warning,
     danger: $danger,
-    color-scheme: dark,
   ),
 );
 
