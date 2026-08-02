@@ -64,6 +64,7 @@
   --chr-cs-color: #75715e;
   --chr-cp-color: #75715e;
   --chr-cpf-color: #75715e;
+  color-scheme: light;
 }
 
 :root.theme--dark {
@@ -126,6 +127,7 @@
   --chr-gd-color: #f92672;
   --chr-gi-color: #a6e22e;
   --chr-gu-color: #75715e;
+  color-scheme: dark;
 }
 
 /* Background */
