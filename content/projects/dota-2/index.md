@@ -6,7 +6,7 @@ start: 2026
 category: Games
 company: Valve
 status: Live Service
-image: content/projects/dota-2/images/dota-2-heroes.webp
+image: dota-2-heroes.webp
 imageAlt: A set of fantasy heroes line up over the text 'DOTA 2'
 description: When I joined Valve I started off working on the Dota 2 team, as
   it's a good place to experience 'The Valve Process'. While I was there I fixed
