@@ -43,6 +43,13 @@ fields:
     label: Content column ratio
     min: 0.5
     max: 0.9
+  pageAnimations:
+    type: boolean
+    label: Animate page load
+    # anatole fades each block down on load. Hugo gated this with the inverted
+    # `doNotLoadAnimations` param; stated positively here so the checkbox reads the way it
+    # behaves. Unset counts as off — see `_animated.scss` for the reduced-motion rule that
+    # applies whatever this is set to.
   # Social links. Hugo stored these as a repeating `[[params.socialIcons]]` array, but
   # Timber's v1 field vocabulary has no list-of-objects kind, so each link is its own
   # field. The sidebar renders only the ones that are filled in.

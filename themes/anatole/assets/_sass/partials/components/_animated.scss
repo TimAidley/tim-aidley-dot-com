@@ -1,3 +1,7 @@
+// The `animated` class is only emitted when `pageAnimations` is on in settings, so this
+// whole block is inert on a site that has it off. The reduced-motion rule below is the
+// backstop for when it IS on: a reader who has asked their OS for less motion gets none,
+// regardless of the site setting.
 .animated {
   transition: top 0.8s linear;
   animation-duration: 1s;
@@ -48,5 +52,13 @@
     100% {
       transform: translateY(0);
     }
+  }
+}
+
+// Respect the reader's own preference over the site's (WCAG 2.3.3).
+@media (prefers-reduced-motion: reduce) {
+  .animated {
+    transition: none;
+    animation: none;
   }
 }

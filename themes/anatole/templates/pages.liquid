@@ -16,7 +16,7 @@
   {%- endcomment -%}
   {%- capture body %}{{ content }}{% endcapture -%}
   {%- unless page.layout == 'home' and body == blank -%}
-    <div class="post animated fadeInDown">
+    <div class="post{% if site.pageAnimations %} animated fadeInDown{% endif %}">
       <div class="post__content">
         {% unless page.layout == 'home' %}<h1>{{ page.title }}</h1>{% endunless %}
         {{ content }}
@@ -28,7 +28,7 @@
 
   {%- when 'home' -%}
     {% for post in collections.posts %}
-      <div class="post animated fadeInDown">
+      <div class="post{% if site.pageAnimations %} animated fadeInDown{% endif %}">
         {% if post.thumbnail %}
           <div class="post__thumbnail-wrapper">
             <a href="{{ post.url | relative_url }}">
@@ -61,7 +61,7 @@
       emitting a heading whenever the year changes reproduces Hugo's GroupByDate without
       a grouping filter.
     {%- endcomment -%}
-    <div class="archive animated fadeInDown">
+    <div class="archive{% if site.pageAnimations %} animated fadeInDown{% endif %}">
       {%- assign lastYear = '' -%}
       {% for post in collections.posts %}
         {%- assign year = post.date | slice: 0, 4 -%}
@@ -100,7 +100,7 @@
       {% for category in categories %}
         {%- assign items = collections.projects | where: 'category', category | sort: 'start' | reverse -%}
         {% if items.size > 0 %}
-          <div class="post animated fadeInDown" data-category="{{ category }}">
+          <div class="post{% if site.pageAnimations %} animated fadeInDown{% endif %}" data-category="{{ category }}">
             <h2 class="portfolio__title" id="{{ category | remove: ' ' | remove: '&' | downcase }}">{{ category }}</h2>
             {% for project in items %}
               <div class="portfolio-item" data-date="{{ project.start }}" data-category="{{ category }}">
