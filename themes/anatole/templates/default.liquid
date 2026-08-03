@@ -106,7 +106,7 @@
         {% block main %}
           <div class="post animated fadeInDown">
             <div class="post__content">
-              <h1>{{ page.title }}</h1>
+              <h1>{{ page.title | markdownify }}</h1>
               {{ content }}
             </div>
           </div>
