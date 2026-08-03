@@ -64,7 +64,7 @@
   --chr-cs-color: #75715e;
   --chr-cp-color: #75715e;
   --chr-cpf-color: #75715e;
-  color-scheme: light;
+  color-scheme: light; 
 }
 
 :root.theme--dark {
