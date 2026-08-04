@@ -58,17 +58,6 @@
     }
   }
 
-  // Listing titles: the upcased look lives here rather than in Liquid (`upcase`
-  // would mangle the markdownified title's `:timber-logo` shortcode / HTML). The
-  // wordmark is fixed brand text, so it opts back out.
-  &__title {
-    text-transform: uppercase;
-
-    .wordmark {
-      text-transform: none;
-    }
-  }
-
   &__content {
     a {
       @include themed() {

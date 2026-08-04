@@ -37,13 +37,7 @@
           </div>
         {% endif %}
         <div class="post__content">
-          {%- comment -%}
-            `markdownify`, matching the single-post h1, so a title can carry inline
-            Markdown (the `:timber-logo` wordmark). Hugo-anatole's upcased look moved
-            to CSS (`.post__title`): Liquid's `upcase` would mangle either the
-            shortcode name (before markdownify) or the HTML tags (after).
-          {%- endcomment -%}
-          <h3 class="post__title"><a href="{{ post.url | relative_url }}">{{ post.title | markdownify }}</a></h3>
+          <h3><a href="{{ post.url | relative_url }}">{{ post.title | markdownify }}</a></h3>
           {%- comment -%}
             anatole's index.html shows `.Summary` — the opening of the post itself, not
             the meta description — and offers "Read more" only when the post is actually
@@ -78,7 +72,7 @@
         <ul class="archive__list">
           <li class="archive__list-item">
             <a class="archive__list-title" href="{{ post.url | relative_url }}" title="{{ post.title }}">
-              {{ post.title | markdownify }}
+              {{ post.title | upcase }}
             </a>
             <div class="archive__list-date">{{ post.date | slice: 0, 10 | date: '%b %-d', 0 }}</div>
           </li>
