@@ -11,7 +11,6 @@ public: true
 <!--more-->
 
 ## Why another static site generator?
-
 Static site generators are great for fairly small sites that have content that doesn't change very much. If your site doesn't have to present data from a database, there's no need to generate the pages every time someone asks for them; just generate them all ahead of time, and just pass them over to the browser when asked.
 
 Because serving these pages is so simple, there are a bunch of places like GitHub and Cloudflare that will serve up static sites for free, as it costs them so little.
