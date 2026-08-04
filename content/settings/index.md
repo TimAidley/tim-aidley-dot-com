@@ -6,7 +6,6 @@ homepage: PAGE-HOME
 activeTheme: anatole
 profilePicture: /assets/general/tim.jpg
 contentRatio: 0.75
-pageAnimations: false
 copyright: |-
   Tim Aidley. \
   🏳️‍⚧️ Trans rights are human rights. \
