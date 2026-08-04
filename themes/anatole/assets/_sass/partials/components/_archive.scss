@@ -32,6 +32,12 @@
     &-title {
       display: inline-block;
       flex: 0.96;
+      // Upcased in CSS, not Liquid — see .post__title in _post.scss.
+      text-transform: uppercase;
+
+      .wordmark {
+        text-transform: none;
+      }
 
       @include themed() {
         color: t('primary');
