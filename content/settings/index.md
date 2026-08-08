@@ -9,7 +9,7 @@ contentRatio: 0.75
 copyright: |-
   Tim Aidley. \
   🏳️‍⚧️ Trans rights are human rights. \
-  Made using :timber-logo - a Tim Aidley production.
+  Made using :timber-logo
 bluesky: https://bsky.app/profile/tim.aidley.com
 mastodon: https://mastodon.gamedev.place/@planettimmy
 github: https://github.com/TimAidley
