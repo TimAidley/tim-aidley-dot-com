@@ -14,6 +14,8 @@ description: I was the sole programmer on this project, along with an artist and
   including the vehicle dynamics, audio, VFX, menu system, AI, and game
   progression. The project was completed in around six months, and was the
   best-selling game from Fiendish Games at the time.
+link: https://hftrb.aidley.com/
+linktext: Play it in your browser
 tags:
   - PC
   - Flight Combat
