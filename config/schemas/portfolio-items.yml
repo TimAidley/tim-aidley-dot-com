@@ -3,7 +3,7 @@
 # object with its own bundle (and its own colocated image), so they are editable in the
 # browser; `portfolio.liquid` groups them back into the three categories for display.
 kind: collection
-urlPattern: /projects/{slug}/
+urlPattern: /portfolio/{slug}/
 hasBody: false
 fields:
   title:
