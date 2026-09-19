@@ -4,5 +4,6 @@ title: Projects
 created: 2026-09-19T22:36:31.960Z
 layout: projects
 description: Projects I am working on, or have been working on recently.
+public: true
 ---
 
