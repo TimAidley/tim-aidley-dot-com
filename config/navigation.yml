@@ -6,3 +6,5 @@
   ref: PAGE-POSTS
 - label: Portfolio
   ref: PAGE-PORTFOLIO
+- label: Projects
+  ref: PAGE-PROJECTS
