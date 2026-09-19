@@ -21,5 +21,6 @@ fields:
       - home # body, then the recent-posts listing
       - archive # body, then every post grouped by year
       - portfolio # body, then the projects listing with sort controls
+      - projects # body, then projects by most recent
   description:
     type: multiline
