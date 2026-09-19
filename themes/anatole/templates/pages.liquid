@@ -100,54 +100,54 @@
     <div id="portfolio-container">
       {%- comment -%}
         The three categories are listed explicitly to preserve the order the Hugo data
-        file used; `where` then pulls each one's projects out of the collection.
+        file used; `where` then pulls each one's portfolio-items out of the collection.
       {%- endcomment -%}
       {%- assign categories = 'Games,Other Software,Film & Television' | split: ',' -%}
       {% for category in categories %}
-        {%- assign items = collections.projects | where: 'category', category | sort: 'start' | reverse -%}
+        {%- assign items = collections.portfolio-items | where: 'category', category | sort: 'start' | reverse -%}
         {% if items.size > 0 %}
           <div class="post animated fadeInDown" data-category="{{ category }}">
             <h2 class="portfolio__title" id="{{ category | remove: ' ' | remove: '&' | downcase }}">{{ category }}</h2>
-            {% for project in items %}
-              <div class="portfolio-item" data-date="{{ project.start }}" data-category="{{ category }}">
+            {% for portfolio-item in items %}
+              <div class="portfolio-item" data-date="{{ portfolio-item.start }}" data-category="{{ category }}">
                 <div class="portfolio-item__main">
-                  {% if project.image %}
+                  {% if portfolio-item.image %}
                     <div class="portfolio-item__image">
-                      <a href="{{ project.url | relative_url }}">
-                        <img src="{{ project.url | relative_url }}{{ project.image }}" alt="{{ project.title }}" loading="lazy" />
+                      <a href="{{ portfolio-item.url | relative_url }}">
+                        <img src="{{ portfolio-item.url | relative_url }}{{ portfolio-item.image }}" alt="{{ portfolio-item.title }}" loading="lazy" />
                       </a>
                     </div>
                   {% endif %}
                   <div class="portfolio-item__content">
-                    <h2><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h2>
+                    <h2><a href="{{ portfolio-item.url | relative_url }}">{{ portfolio-item.title }}</a></h2>
                     <ul class="portfolio__meta">
-                      {% if project.company %}
+                      {% if portfolio-item.company %}
                         <li class="portfolio__meta-item">
-                          {%- render 'icons', name: 'building' -%}<span>{{ project.company }}</span>
+                          {%- render 'icons', name: 'building' -%}<span>{{ portfolio-item.company }}</span>
                         </li>
                       {% endif %}
-                      {% if project.status %}
+                      {% if portfolio-item.status %}
                         <li class="portfolio__meta-item">
-                          {%- render 'icons', name: 'flag' -%}<span>{{ project.status }}</span>
+                          {%- render 'icons', name: 'flag' -%}<span>{{ portfolio-item.status }}</span>
                         </li>
                       {% endif %}
-                      {% if project.start %}
+                      {% if portfolio-item.start %}
                         <li class="portfolio__meta-item">
-                          {%- render 'icons', name: 'calendar' -%}<span>{{ project.start }}</span>
+                          {%- render 'icons', name: 'calendar' -%}<span>{{ portfolio-item.start }}</span>
                         </li>
                       {% endif %}
                     </ul>
-                    <p>{{ project.description }}</p>
-                    {% if project.link %}
+                    <p>{{ portfolio-item.description }}</p>
+                    {% if portfolio-item.link %}
                       <div class="portfolio__button-wrapper">
-                        <a class="portfolio__button" href="{{ project.link }}" target="_blank" rel="noopener">
-                          {{ project.linktext | default: 'Visit Site' }}
+                        <a class="portfolio__button" href="{{ portfolio-item.link }}" target="_blank" rel="noopener">
+                          {{ portfolio-item.linktext | default: 'Visit Site' }}
                         </a>
                       </div>
                     {% endif %}
-                    {% if project.tags %}
+                    {% if portfolio-item.tags %}
                       <div class="separator">
-                        {% for tag in project.tags %}<p class="tag">{{ tag }}</p>{% endfor %}
+                        {% for tag in portfolio-item.tags %}<p class="tag">{{ tag }}</p>{% endfor %}
                       </div>
                     {% endif %}
                   </div>
