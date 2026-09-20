@@ -30,20 +30,27 @@
       }
     }
 
-    // Sizes. Percentages of the content column, so they stay responsive.
+    // Sizes. Two sets, because a figure means different things at the two widths.
     //
-    // Two sets, because a figure means different things at the two widths. On desktop a
-    // wrap-* figure floats with text beside it, so "small" has to be genuinely small or
-    // there is no room for the text to wrap into — these are roughly the editor's own
-    // 12/20/30rem buckets at the ~900px column anatole renders. Below the wrap
-    // breakpoint nothing floats: a figure is a block in the reading column, and the same
-    // 25% would be a ~90px postage stamp on a phone, so the original generous values
-    // stay. anatole's stock .small/.medium/.big were the wide set only.
+    // DESKTOP: fixed widths, matching the editor's own `sm`/`md`/`lg` buckets
+    // (`packages/app/src/styles.css`: 12/20/30rem at a 16px root = 192/320/480px).
+    // Deliberately NOT percentages of the column — that was the previous attempt and it
+    // reintroduced the original complaint by a different route: a percentage grows with
+    // the column, so "small" was 225px on a 1280px screen but 345px at 1920px, while the
+    // editor's preview stayed a fixed 192px at every width. The author picks a size
+    // against what the editor shows, so the theme has to mean the same thing by it.
+    // `rem` here is 10px, not 16px — `_html.scss` sets the 62.5% root anatole is built
+    // on — hence 19.2rem, not 12rem, for the same 192px.
+    //
+    // BELOW THE WRAP BREAKPOINT: percentages, as before. Nothing floats there, so a
+    // figure is a block in the reading column and wants to scale with it — a fixed 192px
+    // would be a fine desktop float but a stamp beside phone-width text. These are
+    // anatole's stock .small/.medium/.big values.
     &--sm {
       max-width: 50%;
 
       @include desktop {
-        max-width: 25%;
+        max-width: 19.2rem; // 192px
       }
     }
 
@@ -51,7 +58,7 @@
       max-width: 75%;
 
       @include desktop {
-        max-width: 40%;
+        max-width: 32rem; // 320px
       }
     }
 
@@ -59,7 +66,7 @@
       max-width: 87.5%;
 
       @include desktop {
-        max-width: 60%;
+        max-width: 48rem; // 480px
       }
     }
 
