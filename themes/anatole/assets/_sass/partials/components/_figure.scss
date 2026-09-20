@@ -30,50 +30,28 @@
       }
     }
 
-    // Sizes. Percentages of the content column, so they stay responsive.
-    //
-    // Two sets, because a figure means different things at the two widths. On desktop a
-    // wrap-* figure floats with text beside it, so "small" has to be genuinely small or
-    // there is no room for the text to wrap into — these are roughly the editor's own
-    // 12/20/30rem buckets at the ~900px column anatole renders. Below the wrap
-    // breakpoint nothing floats: a figure is a block in the reading column, and the same
-    // 25% would be a ~90px postage stamp on a phone, so the original generous values
-    // stay. anatole's stock .small/.medium/.big were the wide set only.
+    // Sizes — anatole's .small / .medium / .big.
     &--sm {
       max-width: 50%;
-
-      @include desktop {
-        max-width: 25%;
-      }
     }
 
     &--md {
       max-width: 75%;
-
-      @include desktop {
-        max-width: 40%;
-      }
     }
 
     &--lg {
       max-width: 87.5%;
-
-      @include desktop {
-        max-width: 60%;
-      }
     }
 
     &--full-width {
       max-width: 100%;
     }
 
-    // Wrapped layouts only float once there is room for text beside them. They set the
-    // float and its gutter and NOTHING else: a `max-width` here would land after the
-    // size buckets above at equal specificity and silently win, which is exactly what it
-    // used to do — every wrapped figure came out at 50% whatever size was chosen, so the
-    // size control did nothing at all on this theme.
+    // Wrapped layouts only float once there is room for text beside them.
     &--wrap-right {
       @include desktop {
+        max-width: 50%;
+
         @include ltr {
           float: right;
           margin: 0 0 0 1.5em;
@@ -88,6 +66,8 @@
 
     &--wrap-left {
       @include desktop {
+        max-width: 50%;
+
         @include ltr {
           float: left;
           margin-right: 1.5em;

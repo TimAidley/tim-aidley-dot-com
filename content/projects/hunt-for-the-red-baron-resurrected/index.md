@@ -4,8 +4,6 @@ title: Hunt for the Red Baron - Resurrected!
 created: 2026-09-19T23:49:07.284Z
 date: 2026-09-19T19:16:00Z
 public: true
-thumbnail: images/titlescreen.webp
-thumbnailAlt: Hunt for the Red Baron title screen, featuring two biplanes dogfighting.
 ---
 
 :::figure{layout="wrap-right" size="sm"}
@@ -29,6 +27,10 @@ Unfortunately I do not have any in-progress pictures or footage of the game as i
 Once we had the basics of flying and shooting in the game, I wrote an in-game mission editor and game designer Adrian Moore joined us part-time to create the missions. Later in the development several other people joined the team (you can see them all in the credits), but the majority of the game was made by the three of us.
 
 ## Release and post-release
+
+:::figure{layout="wrap-right" size="sm"}
+!['Hunt for the Red Baron' title screen, featuring two biplanes](images/titlescreen.webp)
+:::
 
 We released the game in May 2000, and it quickly became Fiendish Games' best seller. Unfortunately it caught the attention of [Sierra Games](https://www.sierragames.com), who at that time owned a trademark on [Red Baron](https://www.sierragamers.com/red-baron/) in videogames, and we were forced to change the name, so we changed it to 'Master of the Skies: The Red Ace' (we thought that maybe it might be the first in a series of 'Master of the Skies' games featuring different pilots of different eras). I never liked the name as much as the original.
 
