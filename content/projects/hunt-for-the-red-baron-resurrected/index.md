@@ -17,16 +17,14 @@ embedded-page: https://hftrb.aidley.com/
 thumbnail: images/titlescreen.webp
 ---
 
-:::figure{layout="wrap-right" size="sm"}
-![The title screen for 'Natural Fawn Killers' featuring a fawn wearing round sunglasses aping the classic poster from 'Natural Born Killers'.](images/nfk.webp)
-:::
-
 # Hunt for the Red Baron - running in a browser!
 
 I have got my 1999/2000 game 'Hunt for the Red Baron' running in a browser - you can play it by clicking on the image above. I recommend using a mouse ( I hope to add better controls for trackpad and mobile soon).
 
 ## Backstory
-
+:::figure{layout="wrap-right" size="sm"}
+![The title screen for 'Natural Fawn Killers' featuring a fawn wearing round sunglasses aping the classic poster from 'Natural Born Killers'.](images/nfk.webp)
+:::
 In 1999 I was working as a games programmer in Guildford for Fiendish Games, which was a department of Criterion Studios which was focused on creating and selling so-called 'Electronic Software Download' games, which was a relatively new business model at the time. Our theory was that you could make smaller games more quickly and sell them online for $10-$15. The first game we released was 'Natural Fawn Killers', a spoof deer hunting game that took one programmer and one artist three or four months to complete.
 
 It was my turn to make a game, and so me and my artist colleague Anthony Callaghan went down to the [George Abbot](https://www.greeneking.co.uk/pubs/surrey/george-abbot) for a couple of pints in the afternoon while we discussed what game to make.
