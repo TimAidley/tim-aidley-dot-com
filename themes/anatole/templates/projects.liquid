@@ -1,15 +1,21 @@
-{% comment %}
-  “projects” template. Named after a content type (events, people…), this
-  renders that type’s pages instead of templates/default.liquid.
-
-  It extends default.liquid and overrides only the “main” block, so the shared
-  <head>, header and footer stay defined once in default.liquid. Context here:
-  page (this object’s fields), content (its rendered body), site, seo, collections.
-{% endcomment %}
 {% layout 'default' %}
+{%- comment -%}
+  A single “projects” page.
+
+  Wrapped in anatole's `.post` / `.post__content`, the same as `posts`, `pages` and
+  `portfolio-items`. This is not cosmetic: every content rule the theme has —
+  heading sizes, link colour, `pre`/`code`, and the Timber `:::figure` layout classes
+  in `_sass/partials/components/_figure.scss` — is scoped to `.post__content`. The
+  stock Timber scaffold this file used to carry (`<article class="page">`) matches no
+  anatole selector at all, so a projects page got none of it and body figures ignored
+  their `layout`/`size` (a `wrap-right` image rendered column-wide and unfloated).
+  Keep the wrapper in step with the other type templates.
+{%- endcomment -%}
 {% block main %}
-<article class="page">
-  <h1>{{ page.title }}</h1>
-  {{ content }}
-</article>
+  <div class="post animated fadeInDown">
+    <div class="post__content">
+      <h1>{{ page.title }}</h1>
+      {{ content }}
+    </div>
+  </div>
 {% endblock %}
