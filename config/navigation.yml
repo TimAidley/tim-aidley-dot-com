@@ -1,5 +1,3 @@
-# Mirrors Hugo's [menu.main]. The About entry was commented out in hugo.toml and the
-# page is still a draft, so it stays out of the nav here too.
 - label: Home
   ref: PAGE-HOME
 - label: Posts
@@ -7,4 +5,4 @@
 - label: Portfolio
   ref: PAGE-PORTFOLIO
 - label: Projects
-  ref: PAGE-PROJECTS
+  ref: e9aaf42a-2a69-4286-888e-b70dce6e4b85
