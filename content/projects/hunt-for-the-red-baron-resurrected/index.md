@@ -12,7 +12,7 @@ keywords:
   - biplanes
   - red baron
   - sopwith
-embed-mode: newtab
+embed-mode: inline
 embedded-page: https://hftrb.aidley.com/
 thumbnail: images/titlescreen.webp
 ---
