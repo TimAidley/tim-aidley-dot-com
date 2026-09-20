@@ -4,8 +4,6 @@ title: Hunt for the Red Baron - Resurrected!
 created: 2026-09-19T23:49:07.284Z
 date: 2026-09-19T19:16:00Z
 public: true
-thumbnail: images/titlescreen.webp
-thumbnailAlt: Hunt for the Red Baron title screen, featuring two biplanes dogfighting.
 ---
 
 :::figure{layout="wrap-right" size="sm"}
@@ -17,7 +15,7 @@ In 1999 I was working as a games programmer in Guildford for Fiendish Games, whi
 It was my turn to make a game, and so me and my artist colleague Anthony Callaghan went down to the [George Abbot](https://www.greeneking.co.uk/pubs/surrey/george-abbot) for a couple of pints in the afternoon while we discussed what game to make.
 
 :::figure{layout="wrap-right" size="sm"}
-![A screenshot of 1984's 'Sopwith' by BMB Compuscience.](images/sopwith.gif)
+!['Sopwith' IBM PC game - four colours, pixelly graphics, a cyan biplane drops two bombs on a magenta building.](images/sopwith1-5.png)
 :::
 
 I have always loved aeroplanes and as a teenager enjoyed playing the classic IBM PC game 'Sopwith' by BMB Compuscience. The game is side-scrolling, and you control a biplane back and forth, bombing buildings and dogfighting enemy aircraft. One of the very satisfying aspects of the game was the physics of the bombs - it was fun to do a loop-the loop and release the bomb halfway through, and watch it move with a graceful arc before (hopefully) destroying the target.
