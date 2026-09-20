@@ -15,7 +15,7 @@
       <h1>{{ page.title }}</h1>
       {% if page.embedded-page %}
         <div class="post__thumbnail-wrapper">
-          {% embed url: page.embedded-page, poster: page.thumbnail, label: page.title, mode: page.embed-options %}
+          {% embed url: page.embedded-page, poster: page.thumbnail, width: '480px', frameWidth: '60%', frameRatio: '4/3', label: page.title, mode: page.embed-mode %}
         </div>
       {% elsif page.thumbnail %}
         <div class="post__thumbnail-wrapper">
