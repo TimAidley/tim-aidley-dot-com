@@ -2,6 +2,8 @@
 id: 2d9dd8a4-94e4-48c4-a72a-64c2b8c711bf
 title: Hunt for the Red Baron - Resurrected!
 created: 2026-09-19T23:49:07.284Z
+date: 2026-09-19T19:16:00Z
+public: true
 ---
 
 :::figure{layout="wrap-right" size="sm"}
