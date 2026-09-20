@@ -13,6 +13,15 @@
   <div class="post animated fadeInDown">
     <div class="post__content">
       <h1>{{ page.title }}</h1>
+      {% if page.embedded-page %}
+        <div class="post__thumbnail-wrapper">
+          {% embed url: page.embedded-page, poster: page.thumbnail, label: page.title, mode: page.embed-options %}
+        </div>
+      {% elsif page.thumbnail %}
+        <div class="post__thumbnail-wrapper">
+          <img class="post__thumbnail" src="{{ page.thumbnail }}" alt="{{ page.title }}" />
+        </div>
+      {% endif %}
       {{ content }}
     </div>
   </div>

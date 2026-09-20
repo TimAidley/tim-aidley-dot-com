@@ -16,6 +16,13 @@ fields:
   thumbnail:
     type: image
     label: Thumbnail
+  embedded-page:
+    type: embed
+    label: Page to embed
+  embed-mode:
+    type: enum
+    label: How to open it
+    options: [inline, newtab]
   keywords:
     type: tags
     label: Keywords
