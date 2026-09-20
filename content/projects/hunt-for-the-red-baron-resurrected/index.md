@@ -4,6 +4,14 @@ title: Hunt for the Red Baron - Resurrected!
 created: 2026-09-19T23:49:07.284Z
 date: 2026-09-19T19:16:00Z
 public: true
+description: Over a period of around 9 months in 1999/2000, I wrote a WWI aerial
+  combat game. You can now play it live in a browser!
+keywords:
+  - game
+  - wwi
+  - biplanes
+  - red baron
+  - sopwith
 ---
 
 :::figure{layout="wrap-right" size="sm"}
