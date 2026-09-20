@@ -14,13 +14,14 @@
     <div class="post__content">
       <h1>{{ page.title }}</h1>
       {% if page.embedded-page %}
-        <div class="post__thumbnail-wrapper">
+        <div>
           {% embed url: page.embedded-page, poster: page.thumbnail, width: '480px', frameWidth: '80%', frameRatio: '4/3', label: page.title, mode: page.embed-mode %}
         </div>
       {% elsif page.thumbnail %}
-        <div class="post__thumbnail-wrapper">
+        <div>
           <img class="post__thumbnail" src="{{ page.thumbnail }}" alt="{{ page.title }}" />
         </div>
+      <br/>
       {% endif %}
       {{ content }}
     </div>
