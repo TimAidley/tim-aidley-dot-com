@@ -8,27 +8,9 @@
   `_sass/partials/components/_figure.scss` — is scoped to `.post__content`. The stock
   Timber scaffold (`<article class="page">`) matches no anatole selector at all, so a
   projects page got none of it and body figures ignored their `layout`/`size`.
-
-  The optional lead thumbnail mirrors `posts.liquid` rather than rolling its own markup,
-  so it picks up the theme's thumbnail styling and sits outside `.post__content` exactly
-  as a post's does.
 {%- endcomment -%}
 {% block main %}
   <div class="post animated fadeInDown">
-    {% if page.thumbnail %}
-      <div class="post__thumbnail-wrapper">
-        {%- comment -%}
-          `{{ ... }}` — a single-braced `{page.thumbnail}` is not Liquid interpolation and
-          renders literally as the src, giving a broken image. Alt text falls back to the
-          title so the image is never announced as unlabelled.
-        {%- endcomment -%}
-        <img
-          class="post__thumbnail"
-          src="{{ page.thumbnail }}"
-          alt="{{ page.thumbnailAlt | default: page.title }}"
-        />
-      </div>
-    {% endif %}
     <div class="post__content">
       <h1>{{ page.title }}</h1>
       {{ content }}

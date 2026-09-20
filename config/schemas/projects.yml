@@ -13,12 +13,6 @@ fields:
   description:
     type: multiline
     label: Summary
-  thumbnail:
-    type: image
-    label: Thumbnail
-  thumbnail-html:
-    type: multiline
-    label: Optional html to replace thumbnail with when pressed.
   keywords:
     type: tags
     label: Keywords
