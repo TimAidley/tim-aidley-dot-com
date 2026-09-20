@@ -2,10 +2,6 @@
 id: 2d9dd8a4-94e4-48c4-a72a-64c2b8c711bf
 title: Hunt for the Red Baron - Resurrected!
 created: 2026-09-19T23:49:07.284Z
-public: true
-date: 2026-09-19T18:21:00Z
-thumbnail: images/titlescreen.webp
-thumbnailAlt: Hunt for the Red Baron title screen, featuring two biplanes dogfighting.
 ---
 
 :::figure{layout="wrap-right" size="sm"}
@@ -14,7 +10,7 @@ thumbnailAlt: Hunt for the Red Baron title screen, featuring two biplanes dogfig
 
 In 1999 I was working as a games programmer in Guildford for Fiendish Games, which was a department of Criterion Studios which was focused on creating and selling so-called 'Electronic Software Download' games, which was a relatively new business model at the time. Our theory was that you could make smaller games more quickly and sell them online for $10-$15. The first game we released was 'Natural Fawn Killers', a spoof deer hunting game that took one programmer and one artist three or four months to complete.
 
-It was my turn to make a game, and so me and my artist colleague Anthony Callaghan went down to the \<a href="[https://www.greeneking.co.uk/pubs/surrey/george-abbot">George](https://www.greeneking.co.uk/pubs/surrey/george-abbot">George) Abbot\</a> for a couple of pints in the afternoon while we discussed what game to make.
+It was my turn to make a game, and so me and my artist colleague Anthony Callaghan went down to the [George Abbot](https://www.greeneking.co.uk/pubs/surrey/george-abbot) for a couple of pints in the afternoon while we discussed what game to make.
 
 :::figure{layout="wrap-right" size="sm"}
 ![A screenshot of 1984's 'Sopwith' by BMB Compuscience.](images/sopwith.gif)
