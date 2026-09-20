@@ -1,20 +1,37 @@
-{% comment %}
-  “projects” template. Named after a content type (events, people…), this
-  renders that type’s pages instead of templates/default.liquid.
-
-  It extends default.liquid and overrides only the “main” block, so the shared
-  <head>, header and footer stay defined once in default.liquid. Context here:
-  page (this object’s fields), content (its rendered body), site, seo, collections.
-{% endcomment %}
 {% layout 'default' %}
+{%- comment -%}
+  A single “projects” page.
+
+  Wrapped in anatole's `.post` / `.post__content`, the same as `posts`, `pages` and
+  `portfolio-items`. This is not cosmetic: every content rule the theme has — heading
+  sizes, link colour, `pre`/`code`, and the Timber `:::figure` layout classes in
+  `_sass/partials/components/_figure.scss` — is scoped to `.post__content`. The stock
+  Timber scaffold (`<article class="page">`) matches no anatole selector at all, so a
+  projects page got none of it and body figures ignored their `layout`/`size`.
+
+  The optional lead thumbnail mirrors `posts.liquid` rather than rolling its own markup,
+  so it picks up the theme's thumbnail styling and sits outside `.post__content` exactly
+  as a post's does.
+{%- endcomment -%}
 {% block main %}
-<article class="page">
-  <h1>{{ page.title }}</h1>
-  {% if page.thumbnail %}
-    <center>
-      <img src="{page.thumbnail}"/>
-    </center>
-  {% endif %}
-  {{ content }}
-</article>
+  <div class="post animated fadeInDown">
+    {% if page.thumbnail %}
+      <div class="post__thumbnail-wrapper">
+        {%- comment -%}
+          `{{ ... }}` — a single-braced `{page.thumbnail}` is not Liquid interpolation and
+          renders literally as the src, giving a broken image. Alt text falls back to the
+          title so the image is never announced as unlabelled.
+        {%- endcomment -%}
+        <img
+          class="post__thumbnail"
+          src="{{ page.thumbnail }}"
+          alt="{{ page.thumbnailAlt | default: page.title }}"
+        />
+      </div>
+    {% endif %}
+    <div class="post__content">
+      <h1>{{ page.title }}</h1>
+      {{ content }}
+    </div>
+  </div>
 {% endblock %}
